@@ -20,7 +20,7 @@ export class SidenavListComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.authChange
       .subscribe(isAuth => {
         this.isAuth = isAuth;
-      })
+      });
   }
 
   closeSideNav() {
@@ -29,6 +29,11 @@ export class SidenavListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.onCloseSideNav.emit();
   }
 
 }
