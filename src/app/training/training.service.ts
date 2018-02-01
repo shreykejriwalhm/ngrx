@@ -43,7 +43,6 @@ export class TrainingService {
       .valueChanges() // gives only value not id
       // .snapshotChanges()
       .subscribe((exercises: Exercise[]) => {
-        console.log(exercises);
         this.finishedExercisesChanged.next(exercises);
       }));
   }
