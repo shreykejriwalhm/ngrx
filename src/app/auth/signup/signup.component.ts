@@ -13,7 +13,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   maxDate: Date;
   isLoading: boolean = false;
   subscription: Subscription;
-  constructor(private authService: AuthService, private uiService: UIService) {}
+  constructor(private authService: AuthService, private uiService: UIService) { }
 
   ngOnInit() {
     this.maxDate = new Date();
@@ -33,6 +33,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
