@@ -1,31 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { NgForm } from "@angular/forms";
+import { AuthService } from "../auth.service";
+import { UIService } from "../../shared/ui.service";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: "app-signup",
+  templateUrl: "./signup.component.html",
+  styleUrls: ["./signup.component.css"]
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   maxDate: Date;
-
-  constructor(private authService: AuthService) { }
+  isLoading: boolean = false;
+  subscription: Subscription;
+  constructor(private authService: AuthService, private uiService: UIService) {}
 
   ngOnInit() {
-    console.log(this.maxDate);
     this.maxDate = new Date();
-    console.log(this.maxDate);
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
-    console.log(this.maxDate);
+    this.subscription = this.uiService.loadingStateChanged.subscribe(
+      (loadingState: boolean) => {
+        this.isLoading = loadingState;
+      }
+    );
   }
 
   onSubmit(form: NgForm) {
-    console.log(form);
     this.authService.registerUser({
       email: form.value.email,
       password: form.value.password
-    })
+    });
   }
 
+  ngOnDestroy() {
+    // this.subscription.unsubscribe();
+  }
 }

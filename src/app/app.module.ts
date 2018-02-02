@@ -48,7 +48,7 @@ import { AuthModule } from "./auth/auth.module";
     AngularFireAuthModule,
     AuthModule
   ],
-  providers: [AuthService, TrainingService],
+  providers: [AuthService, TrainingService, UIService],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent]
 })
